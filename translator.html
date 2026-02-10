@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>translator</title>
+ <link rel="stylesheet" href="k4.css"/>
+</head>
+
+<body>
+ <div id="first" >
+  <textarea id="english" onkeyup="change()" placeholder="text here....."></textarea>
+ </div>
+ <br />
+ <br />
+ <br /> 
+ <select id="language" onchange="change()">
+   <option value="ta">Tamil</option>
+   <option value="hi">Hindi</option>
+   <option value="te">Telugu</option>
+   <option value="ml">Malayalam</option>
+   <option value="kn">Kannada</option>
+   <option value="fr">French</option>
+   <option value="es">Spanish</option>
+  </select>
+ <p><b>Tamil:</b><span id="translate" ></span></p>
+ <script>
+ 
+
+  var english=document.getElementById("english")
+  var translate=document.getElementById("translate")
+  async function change()
+  {
+   const text=document.getElementById("english").value; 
+   const lang=document.getElementById("language").value
+   const languageNames = {
+  ta: "Tamil",
+  hi: "Hindi",
+  te: "Telugu",
+  ml: "Malayalam",
+  kn: "Kannada",
+  fr: "French",
+  es: "Spanish"
+};
+document.querySelector("p b").textContent = languageNames[lang] + ":";
+   if (text===""){
+    document.getElementById("translate").textContent="";
+    return;
+   }
+   //translate.textContent=english.value
+   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      document.getElementById("translate").textContent = data[0][0][0];
+  }
+  
+ </script>
+   
+ <style>
+
+ div textarea{
+  height: 100px;
+  width: 370px;
+  background-color: grey;
+  color: white;
+  font-style: italic;
+  font-size: 25px;
+  box-shadow: 80px;
+  box-shadow: 4px 45px 125px rgba(1, 1, 1, 1.5);
+
+ }
+ p{
+  height: 100vh;
+  width: 370px;
+  background: #fcfcfc;
+background: linear-gradient(174deg, rgba(252, 252, 252, 1) 0%, rgba(245, 246, 246, 1) 0%, rgba(0, 0, 0, 1) 100%, rgba(61, 66, 66, 1) 0%, rgba(61, 66, 66, 1) 100%, rgba(193, 199, 196, 1) 100%, rgba(20, 19, 19, 1) 100%, rgba(87, 199, 133, 1) 100%);
+  color: black;
+  font-style: italic;
+  font-size: 25px;
+  box-shadow: 80px;
+  box-shadow: 4px 45px 125px rgba(1, 1, 1, 1.5);
+
+ }
+ select{
+  box-shadow: 80px;
+  box-shadow: 5px 45px 125px 4px rgba(1, 1, 1, 1.5);
+ }
+ 
+ </style>
+</body>
+
+</html>
+  
